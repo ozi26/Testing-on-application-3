@@ -129,14 +129,14 @@ pipeline {
                 // Verify critical imports work
                 sh """
                     ${VENV_DIR}/bin/python -c "
-import yaml
-import json
-import subprocess
-import argparse
-from pathlib import Path
-print('All critical imports OK')
-"
-                """
+                    import yaml
+                    import json
+                    import subprocess
+                    import argparse
+                    from pathlib import Path
+                    print('All critical imports OK')
+                    "
+                                    """
             }
         }
 
