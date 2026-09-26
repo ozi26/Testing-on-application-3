@@ -1,6 +1,6 @@
 # Rating Service: stores rider ratings for completed trips.
 from flask import Flask, jsonify, request  # Imports Flask HTTP helpers.
-from sample_microservices.config.rating_config import SERVICE_NAME, PORT  # Loads rating configuration.
+from rideshare_services.config.rating_config import SERVICE_NAME, PORT  # Loads rating configuration.
 
 app = Flask(__name__)  # Creates the Flask application.
 ratings = []  # Stores rating records in memory.

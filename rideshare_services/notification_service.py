@@ -1,6 +1,6 @@
 # Notification Service: records messages that would be sent to riders or drivers.
 from flask import Flask, jsonify, request  # Imports Flask HTTP helpers.
-from sample_microservices.config.notification_config import SERVICE_NAME, PORT  # Loads notification configuration.
+from rideshare_services.config.notification_config import SERVICE_NAME, PORT  # Loads notification configuration.
 
 app = Flask(__name__)  # Creates the Flask application.
 notifications = []  # Stores notification records in memory.
