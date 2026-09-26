@@ -26,11 +26,19 @@ def create_rating():  # Defines the rating function.
 def get_ratings(trip_id):  # Defines the rating lookup function.
     return jsonify(ratings=[r for r in ratings if r["tripId"] == trip_id])  # Returns matching ratings.
 
+# ---------------------------------------------
 # Reports service health.
+# ---------------------------------------------
 @app.get("/health")  # Maps GET /health to the health handler.
 def health():  # Defines the health function.
     return jsonify(status="ok", service=SERVICE_NAME)  # Returns service health.
 
+# ---------------------------------------------
 # Starts the service when run directly.
+# ---------------------------------------------
+@app.route("/start", methods=["POST"])  # Maps POST /start to the start handler.
+def start():  # Defines the start function.
+    return jsonify(message="Service started"), 200  # Returns a success message.
+
 if __name__ == "__main__":  # Checks direct execution.
     app.run(host="0.0.0.0", port=PORT)  # Starts Flask.

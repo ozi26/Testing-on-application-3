@@ -5,7 +5,10 @@ from rideshare_services.config.notification_config import SERVICE_NAME, PORT  # 
 app = Flask(__name__)  # Creates the Flask application.
 notifications = []  # Stores notification records in memory.
 
+# ---------------------------------------------
 # Creates a notification record.
+# ---------------------------------------------
+
 @app.post("/notifications")  # Maps POST /notifications to the creation function.
 def create_notification():  # Defines the notification creation handler.
     data = request.get_json(silent=True) or {}  # Reads the request body.
@@ -17,12 +20,16 @@ def create_notification():  # Defines the notification creation handler.
     notifications.append(notification)  # Stores the notification.
     return jsonify(notification), 201  # Returns the queued notification.
 
+# ---------------------------------------------
 # Lists all queued notifications.
+# ---------------------------------------------
 @app.get("/notifications")  # Maps GET /notifications to the list handler.
 def list_notifications():  # Defines the notification listing function.
     return jsonify(notifications=notifications)  # Returns all notifications.
 
+# ---------------------------------------------
 # Reports service health.
+# ---------------------------------------------
 @app.get("/health")  # Maps GET /health to the health handler.
 def health():  # Defines the health function.
     return jsonify(status="ok", service=SERVICE_NAME)  # Returns service health.
