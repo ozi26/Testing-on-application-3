@@ -5,7 +5,9 @@ from rideshare_services.config.matching_config import SERVICE_NAME, PORT  # Load
 app = Flask(__name__)  # Creates the Flask application.
 active_matches = {}  # Stores current rider-to-driver matches.
 
+# ---------------------------------------------
 # Creates a ride match using a supplied driver list.
+# ---------------------------------------------
 @app.post("/matches")  # Maps POST /matches to the matching function.
 def create_match():  # Defines the matching handler.
     data = request.get_json(silent=True) or {}  # Reads the request body.

@@ -5,7 +5,9 @@ from rideshare_services.config.driver_config import SERVICE_NAME, PORT  # Loads 
 app = Flask(__name__)  # Creates the Flask application.
 drivers = {}  # Stores driver records in memory.
 
+# ---------------------------------------------
 # Registers a driver.
+# ---------------------------------------------
 @app.post("/drivers")  # Maps POST /drivers to the creation handler.
 def create_driver():  # Defines the driver creation function.
     data = request.get_json(silent=True) or {}  # Reads the JSON body.
