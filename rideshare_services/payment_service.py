@@ -27,6 +27,8 @@ def process_payment():  # Defines the payment function.
 def health():  # Defines the health function.
     return jsonify(status="ok", service=SERVICE_NAME)  # Returns service health.
 
+# ---------------------------------------------
 # Starts the service when run directly.
+# ---------------------------------------------
 if __name__ == "__main__":  # Checks direct execution.
     app.run(host="0.0.0.0", port=PORT)  # Starts Flask.

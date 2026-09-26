@@ -32,11 +32,15 @@ def get_rider(rider_id):  # Defines the rider lookup handler.
         return jsonify(error="Rider not found"), 404  # Returns a not-found response.
     return jsonify(rider)  # Returns the rider record.
 
+# ---------------------------------------------
 # Reports service health for deployment checks.
+# ---------------------------------------------
 @app.get("/health")  # Maps GET /health to the health handler.
 def health():  # Defines the health handler.
     return jsonify(status="ok", service=SERVICE_NAME)  # Returns a simple health response.
 
+# ---------------------------------------------
 # Starts the HTTP service when this file is run directly.
+# ---------------------------------------------
 if __name__ == "__main__":  # Checks whether Python launched this file directly.
     app.run(host="0.0.0.0", port=PORT)  # Starts Flask on all container interfaces.
