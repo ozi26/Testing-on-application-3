@@ -2,5 +2,5 @@
 import os  # Imports the operating-system module for environment variables.
 
 SERVICE_NAME = 'Matching Service'  # Stores the display name used by this service.
-PORT = int(os.getenv('MATCHING_PORT', "5004"))  # Reads the service port with a safe default.
+PORT = int(os.getenv('MATCHING_PORT', "5009"))  # Reads the service port with a safe default.(5004)
 DATA_LABEL = 'matches'  # Stores the name of the service's in-memory data collection.
