@@ -5,7 +5,9 @@ from rideshare_services.config.trip_config import SERVICE_NAME, PORT  # Loads tr
 app = Flask(__name__)  # Creates the Flask application.
 trips = {}  # Stores trip records by identifier.
 
+# ---------------------------------------------
 # Creates a new trip.
+# ---------------------------------------------
 @app.post("/trips")  # Maps POST /trips to the trip creation function.
 def create_trip():  # Defines the trip creation handler.
     data = request.get_json(silent=True) or {}  # Reads the JSON request body.
@@ -18,7 +20,9 @@ def create_trip():  # Defines the trip creation handler.
     trips[trip_id] = trip  # Stores the trip.
     return jsonify(trip), 201  # Returns the created trip.
 
+# ---------------------------------------------
 # Completes a trip.
+# ---------------------------------------------
 @app.patch("/trips/<trip_id>/complete")  # Maps the completion endpoint.
 def complete_trip(trip_id):  # Defines the completion function.
     trip = trips.get(trip_id)  # Reads the trip.

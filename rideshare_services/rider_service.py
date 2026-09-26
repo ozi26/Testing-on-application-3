@@ -5,7 +5,9 @@ from rideshare_services.config.rider_config import SERVICE_NAME, PORT  # Loads s
 app = Flask(__name__)  # Creates the Flask application.
 riders = {}  # Stores rider records in memory for this prototype.
 
+# ---------------------------------------------
 # Registers a rider and returns the new record.
+# ---------------------------------------------
 @app.post("/riders")  # Maps POST /riders to the registration function.
 def create_rider():  # Defines the rider registration handler.
     data = request.get_json(silent=True) or {}  # Reads the incoming JSON body.
@@ -20,7 +22,9 @@ def create_rider():  # Defines the rider registration handler.
     riders[rider_id] = rider  # Stores the rider record.
     return jsonify(rider), 201  # Returns the new rider.
 
+# ---------------------------------------------
 # Returns one rider by identifier.
+# ---------------------------------------------
 @app.get("/riders/<rider_id>")  # Maps GET /riders/<id> to the lookup function.
 def get_rider(rider_id):  # Defines the rider lookup handler.
     rider = riders.get(rider_id)  # Reads the rider from memory.
