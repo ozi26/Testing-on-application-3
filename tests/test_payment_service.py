@@ -1,5 +1,5 @@
 # Payment Service Tests: checks payment validation and approval.
-from sample_microservices.payment_service import app, payments  # Imports the payment app and state.
+from rideshare_services.payment_service import app, payments  # Imports the payment app and state.
 
 def setup_function():  # Runs before each test.
     payments.clear()  # Clears payment state.

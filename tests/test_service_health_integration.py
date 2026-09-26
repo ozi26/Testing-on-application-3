@@ -5,7 +5,7 @@ SERVICE_MODULES = ["rider", "driver", "trip", "matching", "payment", "rating", "
 
 def test_all_services_have_health_endpoints():  # Defines the multi-service health integration test.
     for service in SERVICE_MODULES:  # Iterates through every service name.
-        module = importlib.import_module(f"sample_microservices.{service}_service")  # Imports the service module.
+        module = importlib.import_module(f"rideshare_services.{service}_service")  # Imports the service module.
         client = module.app.test_client()  # Creates a test client for the Flask app.
         response = client.get("/health")  # Calls the service health endpoint.
         assert response.status_code == 200  # Confirms the endpoint responds successfully.

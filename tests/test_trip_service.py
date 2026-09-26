@@ -1,5 +1,5 @@
 # Trip Service Tests: checks trip creation and completion.
-from sample_microservices.trip_service import app, trips  # Imports the trip app and state.
+from rideshare_services.trip_service import app, trips  # Imports the trip app and state.
 
 def setup_function():  # Runs before each test.
     trips.clear()  # Clears trip state.

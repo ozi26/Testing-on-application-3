@@ -1,5 +1,5 @@
 # Rating Service Tests: checks rating creation and lookup.
-from sample_microservices.rating_service import app, ratings  # Imports the rating app and state.
+from rideshare_services.rating_service import app, ratings  # Imports the rating app and state.
 
 def setup_function():  # Runs before each test.
     ratings.clear()  # Clears rating state.

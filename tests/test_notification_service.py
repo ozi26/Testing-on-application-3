@@ -1,5 +1,5 @@
 # Notification Service Tests: checks notification queuing and listing.
-from sample_microservices.notification_service import app, notifications  # Imports the notification app and state.
+from rideshare_services.notification_service import app, notifications  # Imports the notification app and state.
 
 def setup_function():  # Runs before every test.
     notifications.clear()  # Clears notification state.

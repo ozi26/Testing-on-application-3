@@ -1,5 +1,5 @@
 # Driver Service Tests: checks driver registration and availability.
-from sample_microservices.driver_service import app, drivers  # Imports the driver app and state.
+from rideshare_services.driver_service import app, drivers  # Imports the driver app and state.
 
 def setup_function():  # Runs before every test.
     drivers.clear()  # Clears driver state.

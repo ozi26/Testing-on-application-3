@@ -1,5 +1,5 @@
 # Rider Service Tests: checks registration and lookup.
-from sample_microservices.rider_service import app, riders  # Imports the rider service app and state.
+from rideshare_services.rider_service import app, riders  # Imports the rider service app and state.
 
 def setup_function():  # Runs before each test function.
     riders.clear()  # Resets rider state.

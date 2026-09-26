@@ -1,5 +1,5 @@
 # Matching Service Tests: checks driver selection and no-driver behavior.
-from sample_microservices.matching_service import app, active_matches  # Imports the matching app and state.
+from rideshare_services.matching_service import app, active_matches  # Imports the matching app and state.
 
 def setup_function():  # Runs before each test.
     active_matches.clear()  # Clears previous matches.
