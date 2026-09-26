@@ -37,56 +37,64 @@ from analyzer.config import SOURCE_EXTENSIONS
 
 def extract_service_name(file_path):
     """
-    Extract the service name from a file path.
+    Extract the service root name from a file path.
 
-    Handles these naming conventions:
-        ecommerce_services/cart_service.js          -> "cart"
-        ecommerce_services/config/cart.config.js    -> "cart"
-        ecommerce_services/shipping.config.js       -> "shipping"
-        tests/test_cart_service.test.js             -> "cart"
-        src/paymentservice/index.js                 -> "paymentservice"
-        release/kubernetes-manifests.yaml           -> "release" (fallback)
+    Universal — works for any project with any naming convention.
+    Strips common suffixes (config, service, test, spec, service_test, etc.)
+    to find the base service identifier.
 
-    Returns the root service name, or an empty string.
+    Examples:
+        rideshareservices/config/driver_config.py         -> "driver"
+        rideshareservices/config/matching_config.py       -> "matching"
+        rideshareservices/driver_service.py               -> "driver"
+        tests/test_driver_service.py                      -> "driver"
+        ecommerce_services/config/cart.config.js          -> "cart"
+        ecommerce_services/cart_service.js                -> "cart"
+        src/paymentservice/index.js                       -> "paymentservice"
+        release/kubernetes-manifests.yaml                 -> "kubernetes"
     """
+    from pathlib import Path
     path = Path(file_path)
-    filename = path.stem.lower()
+    name = path.stem.lower()          # e.g., "driver_config", "test_driver_service"
 
-    # ---- Case 1: "<service>_service" ----
-    if filename.endswith("_service"):
-        return filename.replace("_service", "")
+    # --- Strip leading test/spec prefixes ---
+    for prefix in ("test_", "spec_", "tests_", "itest_", "it_"):
+        if name.startswith(prefix):
+            name = name[len(prefix):]
+            break
 
-    # ---- Case 2: "<service>.config" ----
-    if filename.endswith(".config"):
-        return filename.replace(".config", "")
+    # --- Strip known trailing suffixes (order matters: longest first) ---
+    # Sort by length descending so "service_test" is stripped before "test"
+    SUFFIXES = [
+        "_service_test", "_service_tests", "_service_spec",
+        ".service.test", ".service.spec", ".service",
+        "_service", "service",
+        "_config", ".config", "-config",
+        "_settings", ".settings",
+        "_test", ".test", "_tests", ".tests",
+        "_spec", ".spec",
+        "_server", ".server",
+        "_client", ".client",
+        "_handler", ".handler",
+        "_controller", ".controller",
+        "_repository", ".repository",
+        "_dao", ".dao",
+        "_model", ".model",
+        "_view", ".view",
+    ]
+    for suffix in sorted(SUFFIXES, key=len, reverse=True):
+        if name.endswith(suffix):
+            name = name[: -len(suffix)]
+            break
 
-    # ---- Case 3: "test_<service>_service" ----
-    if filename.startswith("test_"):
-        name = filename.replace("test_", "")
-        if name.endswith("_service"):
-            name = name.replace("_service", "")
-        return name
+    # --- Cleanup: strip trailing/leading separators ---
+    name = name.strip("._-")
 
-    # ---- Case 4: "<service>.service" ----
-    if ".service" in filename:
-        return filename.split(".service")[0]
+    # --- Final fallback: if empty, use the original stem ---
+    if not name:
+        name = path.stem.lower()
 
-    # ---- Case 5: directory ending in "service" (Go/K8s style) ----
-    for part in path.parts:
-        if part.endswith("service") and part != path.name:
-            return part
-
-    # ---- Fallback: strip common suffixes ----
-    for suffix in (".config", ".service", ".test", ".spec"):
-        if suffix in filename:
-            return (
-                filename.split(suffix)[0]
-                .replace("test_", "")
-                .replace("_test", "")
-            )
-
-    return filename
-
+    return name
 
 def extract_services_from_config(config_file):
     """

@@ -132,17 +132,6 @@ def is_config_file(file_path):
     """
     Check if a file is a configuration file, using language-agnostic
     heuristics based on name patterns and extensions.
-    
-    This function does NOT need to be modified per-project. It works
-    for YAML, JSON, TOML, XML, .env, JavaScript config files
-    (order.config.js), TypeScript configs, .NET configs, and dozens
-    of other conventions out of the box.
-    
-    Args:
-        file_path: Path to the file (string or Path)
-    
-    Returns:
-        True if the file appears to be configuration, False otherwise.
     """
     from analyzer.config import (
         CONFIG_EXTENSIONS,
@@ -150,35 +139,38 @@ def is_config_file(file_path):
         CONFIG_FILE_NAMES,
         SOURCE_EXTENSIONS,
     )
-    
+
     path = Path(file_path)
     filename = path.name.lower()
     extension = path.suffix.lower().lstrip(".")
-    
-    # ---- Rule 1: Exact filename match (package.json, Dockerfile, etc.) ----
+
+    # ---- Rule 0: File is inside a "config" or "settings" directory ----
+    # This catches: rideshareservices/config/driver_config.py
+    #               src/config/database.py
+    #               app/settings/base.py
+    for part in path.parts[:-1]:       # exclude the filename itself
+        part_lower = part.lower()
+        if part_lower in ("config", "configs", "conf", "settings",
+                          "configuration", "env", "environments"):
+            return True
+
+    # ---- Rule 1: Exact filename match ----
     if filename in CONFIG_FILE_NAMES:
         return True
-    
-    # ---- Rule 2: Name contains a config marker (.config., .env, etc.) ----
-    # This wins OVER the source extension check, so order.config.js is config.
+
+    # ---- Rule 2: Name contains a config marker ----
     for marker in CONFIG_NAME_MARKERS:
         if marker in filename:
             return True
-    
+
     # ---- Rule 3: Extension is a known config extension ----
-    # But only if the extension is NOT also a known source extension.
-    # (This handles the .json ambiguity: JSON is usually data, but if a
-    #  file is named config.json, Rule 1 already caught it.)
-    if extension in CONFIG_EXTENSIONS:
-        # If the extension is exclusively a config extension, accept.
-        if extension not in SOURCE_EXTENSIONS:
-            return True
-    
-    # ---- Rule 4: Filename starts with "config" or "settings" ----
+    if extension in CONFIG_EXTENSIONS and extension not in SOURCE_EXTENSIONS:
+        return True
+
+    # ---- Rule 4: Filename starts with config/settings ----
     if filename.startswith(("config", "settings", "conf.")):
         return True
-    
-    # ---- Otherwise: not a config file ----
+
     return False
 
 
