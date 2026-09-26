@@ -5,7 +5,9 @@ from rideshare_services.config.rating_config import SERVICE_NAME, PORT  # Loads 
 app = Flask(__name__)  # Creates the Flask application.
 ratings = []  # Stores rating records in memory.
 
+# ---------------------------------------------
 # Creates a rating from one to five stars.
+# ---------------------------------------------
 @app.post("/ratings")  # Maps POST /ratings to the rating handler.
 def create_rating():  # Defines the rating function.
     data = request.get_json(silent=True) or {}  # Reads the JSON body.
@@ -17,7 +19,9 @@ def create_rating():  # Defines the rating function.
     ratings.append(rating)  # Stores the rating.
     return jsonify(rating), 201  # Returns the new rating.
 
+# ---------------------------------------------
 # Lists ratings for a trip.
+# ---------------------------------------------
 @app.get("/ratings/<trip_id>")  # Maps the rating lookup endpoint.
 def get_ratings(trip_id):  # Defines the rating lookup function.
     return jsonify(ratings=[r for r in ratings if r["tripId"] == trip_id])  # Returns matching ratings.

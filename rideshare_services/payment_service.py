@@ -5,7 +5,9 @@ from rideshare_services.config.payment_config import SERVICE_NAME, PORT  # Loads
 app = Flask(__name__)  # Creates the Flask application.
 payments = []  # Stores simulated payments in memory.
 
+# ---------------------------------------------
 # Processes a simulated ride payment.
+# ---------------------------------------------
 @app.post("/payments")  # Maps POST /payments to the payment handler.
 def process_payment():  # Defines the payment function.
     data = request.get_json(silent=True) or {}  # Reads the request body.
@@ -17,7 +19,10 @@ def process_payment():  # Defines the payment function.
     payments.append(payment)  # Stores the payment.
     return jsonify(payment), 201  # Returns the payment.
 
+# ---------------------------------------------
 # Returns service health.
+# ---------------------------------------------
+
 @app.get("/health")  # Maps GET /health to the health handler.
 def health():  # Defines the health function.
     return jsonify(status="ok", service=SERVICE_NAME)  # Returns service health.
