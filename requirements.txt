@@ -1,0 +1,6 @@
+# Flask provides the HTTP microservice framework.
+Flask==3.1.2
+# Pytest provides unit and integration testing.
+pytest==8.4.2
+# Requests provides optional external HTTP calls for future service integration.
+requests==2.32.5

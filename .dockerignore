@@ -1,0 +1,5 @@
+# Excludes Python caches from Docker builds.
+__pycache__
+.pytest_cache
+# Excludes Git metadata.
+.git

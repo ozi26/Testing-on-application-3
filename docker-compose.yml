@@ -1,0 +1,72 @@
+# Defines the local deployment for all seven ride-sharing services.
+services:
+  # Rider service.
+  rider-service:
+    # Builds the shared Python service image.
+    build:
+      context: .
+      args:
+        SERVICE_FILE: rider_service.py
+    # Maps the rider API to the host.
+    ports:
+      - "5001:5001"
+  # Driver service.
+  driver-service:
+    # Builds the shared Python service image.
+    build:
+      context: .
+      args:
+        SERVICE_FILE: driver_service.py
+    # Maps the driver API to the host.
+    ports:
+      - "5002:5002"
+  # Trip service.
+  trip-service:
+    # Builds the shared Python service image.
+    build:
+      context: .
+      args:
+        SERVICE_FILE: trip_service.py
+    # Maps the trip API to the host.
+    ports:
+      - "5003:5003"
+  # Matching service.
+  matching-service:
+    # Builds the shared Python service image.
+    build:
+      context: .
+      args:
+        SERVICE_FILE: matching_service.py
+    # Maps the matching API to the host.
+    ports:
+      - "5004:5004"
+  # Payment service.
+  payment-service:
+    # Builds the shared Python service image.
+    build:
+      context: .
+      args:
+        SERVICE_FILE: payment_service.py
+    # Maps the payment API to the host.
+    ports:
+      - "5005:5005"
+  # Rating service.
+  rating-service:
+    # Builds the shared Python service image.
+    build:
+      context: .
+      args:
+        SERVICE_FILE: rating_service.py
+    # Maps the rating API to the host.
+    ports:
+      - "5006:5006"
+  # Notification service.
+  notification-service:
+    # Builds the shared Python service image.
+    build:
+      context: .
+      args:
+        SERVICE_FILE: notification_service.py
+    # Maps the notification API to the host.
+    ports:
+      - "5007:5007"
